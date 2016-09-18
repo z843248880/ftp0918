@@ -1,0 +1,139 @@
+#Day8 作业
+##作业需求
+- [x]  1.博客
+- [x]  2.FTP服务器
+                 
+##博客地址
+[周军龙Day8博客地址]（http://www.cnblogs.com/ZhPythonAuto/p/5875473.html）
+
+##FTP服务器
+>1、软件名称
+    ProName:ftp
+
+>2、作者版权与授权
+    Auth:周军龙
+    mail:zhoujunlong@gmail.com
+
+>3、代码部署说明
+    请将此程序包导入到开发工具（如eclipse、pycharm）的根目录下
+    √ftp_server 程序需要放到linux环境运行
+    √ftp_server 程序需要放到linux环境运行
+    √ftp_server 程序需要放到linux环境运行
+
+>4、目录结构
+        Day8/
+        ├── README
+        └─ftp #ftp主程序目录
+             ├──ftp_client   #ftp客户端
+             |        ├──__init__.py
+             |        └─client.py  #客户端主程序
+             | 
+             └─ftp_server  #ftp服务端
+                     ├── __init__.py
+                     ├── bin 
+                     │   ├── __init__.py
+                     │   └── ftp_server.py  #程序执行入口
+                     │
+                     ├── conf #配置文件
+                     │   └── __init__.py
+                     ├── core #主程序目录
+                     │   ├── __init__.py
+                     │   └── main.py    #主程序
+                     ├──data   #用户数据存储的地方 
+                     |     ├——aaa  # aaa用户家目录
+                     |     |      ├── 1
+                     |     |      |    ├── x1
+                     |     |      |    └─— aaa.txt
+                     |     |      └─— 2
+                     |    ├——bbb  # bbb用户家目录
+                     |     |     └─— bbb.txt
+                     |    ├──users  # 用户对象
+                     |     |       |—— __init__.py
+                     |     |       |—— aaa.json
+                     |     |       └—— bbb.json  
+                     |     ├——account_sample.py #用户对象示例
+                     │    └──__init__.py 
+                     └── log #日志目录
+                              ├── __init__.py
+                              └── log.txt    #记录日志
+>5、程序实现功能
+     - [x] a)显示登录用户当前目录下所有文件
+            b)切换到上一级或下一级目录
+            c)显示当前路径
+            d)客户端上传文件
+            e)客户端下载文件
+            f)断点续传
+            g)服务端实现用户权限限制
+            h)服务端支持多用户登录
+
+    
+>6、登陆程序代码说明
+    - [x] a)server端(在Linux下)执行bin下的ftp_server.py
+            等待客户端连接
+    - [x] b)client端（在Linux下）执行ftp_client下的client.py  
+       #客户端要修改connect地址为server端IP
+       #客户端要修改connect地址为server端IP
+       #客户端要修改connect地址为server端IP
+       
+        输入用户名 >>：aaa
+        输入密码 >>：123
+        登录成功后显示当前用户家目录的路径，并等待后续输入指令
+        /home/www/ftp/ftp_server/data/aaa>>:
+    - [x] c)输入ls显示当前目录下所有文件及目录
+        /home/www/ftp/ftp_server/data/aaa>>:ls
+          1
+          2
+        /home/www/ftp/ftp_server/data/aaa>>:
+    - [x] d)输入cd 命令
+         /home/www/ftp/ftp_server/data/aaa>>:cd
+         只输入cd 命令 ，没加目录名称会提示cd命令的正确用法
+         cd 命令用法:cd dir_name
+         /home/www/ftp/ftp_server/data/aaa>>:
+         /home/www/ftp/ftp_server/data/aaa>>:cd 1
+         输入pwd命令：
+         /home/www/ftp/ftp_server/data/aaa/1>>:pwd
+         显示当前路径
+         /home/www/ftp/ftp_server/data/aaa/1
+         /home/www/ftp/ftp_server/data/aaa/1>>:
+         支持输入 cd . 命令：
+         /home/www/ftp/ftp_server/data/aaa/1>>:cd . 
+         pwd显示还是原路径：
+         /home/www/ftp/ftp_server/data/aaa/1>>:pwd
+         /home/www/ftp/ftp_server/data/aaa/1
+         cd .. 返回上一级目录
+         /home/www/ftp/ftp_server/data/aaa/1>>:cd ..
+         用户不能跳出自己家目录，提示已到顶级目录（实现权限控制）
+         /home/www/ftp/ftp_server/data/aaa>>:cd ..
+         已到顶级目录
+         /home/www/ftp/ftp_server/data/aaa>>:pwd
+         /home/www/ftp/ftp_server/data/aaa
+    - [x] e)输入 disk 显示用户磁盘配额
+         /home/www/ftp/ftp_server/data/aaa>>:disk
+         可用空间：30M
+         /home/www/ftp/ftp_server/data/aaa>>:
+    - [x] f)上传文件 
+      /home/www/ftp/ftp_server/data/aaa>>:put aaa.txt
+      []100%
+      文件put成功^_^
+      /home/www/ftp/ftp_server/data/aaa>>:ls （ls 可以看到aaa.txt已上传成功）
+        1
+        2
+        aaa.txt
+      /home/www/ftp/ftp_server/data/aaa>>:put test.jar(put 大文件到server端)
+       [#####################################]40%
+    - [x] g)下载文件
+        /home/www/ftp/ftp_server/data/aaa/1/x1>>:pwd
+        /home/www/ftp/ftp_server/data/aaa/1/x1
+        /home/www/ftp/ftp_server/data/aaa/1/x1>>:ls
+        x1.txt
+        /home/www/ftp/ftp_server/data/aaa/1/x1>>:get x1.txt  (get  x1目录下的x1.txt文件)
+        250: Ready to transfer files
+        []38%
+        文件下载成功^_^
+        /home/www/ftp/ftp_server/data/aaa/1/x1>>:    
+    - [x] h)输入exit退出系统
+        /home/www/ftp/ftp_server/data/aaa>>:exit
+        [root@elk-16-72 ftp_client]# 
+
+
+          
