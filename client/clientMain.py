@@ -6,7 +6,16 @@ import json
 import os
 import hashlib
 import cmd
+import sys
+import time
 
+
+def view_bar(num, total):
+    rate = num / total
+    rate_num = int(rate * 100)
+    r = '\r[%s%s]%d%%' % ("#" * num, " " * (100 - num), rate_num,)
+    sys.stdout.write(r)
+    sys.stdout.flush()
 
 
 class FtpClient(object):
@@ -41,6 +50,7 @@ class FtpClient(object):
             else:
                 print("命令不存在!!!" % cmd)
                 self.help()
+
                 
     
     def put(self,info_msg):
@@ -78,6 +88,7 @@ class FtpClient(object):
             print("cmd & filename")
     
     def get(self,info_msg):
+        a = 0
         filename = info_msg['filename']
         file_size = int(self.client.recv(1024).decode())
         self.client.send('ok'.encode())
@@ -87,6 +98,7 @@ class FtpClient(object):
         else:
             f = open(filename,'wb')
         m = hashlib.md5()
+
         while received_size < file_size:
             if file_size - received_size > 1024:
                 size = 1024
@@ -96,6 +108,20 @@ class FtpClient(object):
             m.update(data)
             received_size += len(data)
             f.write(data)
+            rate = int((received_size / file_size) * 100)          
+            if a == rate:
+                time.sleep(0.1)
+                view_bar(rate, 100)                
+                a += 1
+
+            
+            
+#             time.sleep(0.5)
+#             if rate == a:
+#                 print(int(rate))
+#                 a += 1 
+#                 print(rate,'   ',a)
+            
         else:
             local_file_md5 = m.hexdigest()
             server_file_md5 = self.client.recv(1024)
@@ -123,14 +149,81 @@ class FtpClient(object):
     def connect(self, ip, port):
         '''连接ftp服务器'''
         self.client.connect((ip, port))
+        
+
     
 
 username = 'zsc'
 password = '123456'
 quota = '10240'
 f1 = FtpClient(username,password,quota)
-f1.connect("localhost", 556)
+f1.connect("localhost", 555)
 f1.user_input()
-    
+ 
+ 
+
+
+
+#         count1 = 0
+#         count2 = 0
+#         count3 = 0
+#         count4 = 0
+#         count5 = 0
+#         count6 = 0
+#         count7 = 0
+#         count8 = 0
+#         count9 = 0
+#         count10 = 0
+
+# if 1 < rate < 2:
+#                 if count1 == 1:
+#                     continue
+#                 print('[#         ]10%')
+#                 count1 = 1 
+#             elif 2 < rate < 3:
+#                 if count1 == 2:
+#                     continue
+#                 print('[##        ]20%')
+#                 count1 = 2
+#             elif 3 < rate < 4:
+#                 if count1 == 3:
+#                     continue
+#                 print('[###       ]30%')
+#                 count1 = 3
+#             elif 4 < rate < 5:
+#                 if count1 == 4:
+#                     continue
+#                 print('[####      ]40%')
+#                 count1 = 4
+#             elif 5 < rate < 6:
+#                 if count1 == 5:
+#                     continue
+#                 print('[#####     ]50%')
+#                 count1 = 5
+#             elif 6 < rate < 7:
+#                 if count1 == 6:
+#                     continue
+#                 print('[######    ]60%')
+#                 count1 = 6
+#             elif 7 < rate < 8:
+#                 if count1 == 7:
+#                     continue
+#                 print('[#######   ]70%')
+#                 count1 = 7
+#             elif 8 < rate < 9:
+#                 if count1 == 8:
+#                     continue
+#                 print('[########  ]80%')
+#                 count1 = 8
+#             elif 9 < rate < 10:
+#                 if count1 == 9:
+#                     continue
+#                 print('[######### ]90%')
+#                 count1 = 9
+#             elif 10 <= rate <11:
+#                 if count1 == 10:
+#                     continue
+#                 print('[##########]100%')
+#                 count1 = 10   
     
     

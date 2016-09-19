@@ -1,14 +1,77 @@
 #!/usr/bin/env python
 # #coding:utf-8
 
+import sys
+import time
 
-import os, re 
 
 
-a = os.popen("ls -l /home/ftp/zsc | head -1 |awk '{print $2}' ").read()
+def view_bar(num, total):
+    rate = num / total
+    rate_num = int(rate * 100)
+    r = '\r[%s%s]%d%%' % ("#" * num, " " * (100 - num), rate_num,)
+    sys.stdout.write(r)
+    sys.stdout.flush()
 
-if int(a) > 1024:
-    print('fdafadfs')
+
+if __name__ == '__main__':
+    a = 0.1
+    for i in range(0, 101):
+        time.sleep(0.1)
+        view_bar(a, 10)
+        a += 0.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# for i in range(1,11):
+#     count + i = i
+# for i in range(1,11):
+#     print(count + i)
+# 
+# 
+# rate = 0.95556 * 10 
+# print(rate )
+
+
+
+
+
+
+
+
+
+# 
+# a = os.popen("ls -l /home/ftp/zsc | head -1 |awk '{print $2}' ").read()
+# 
+# if int(a) > 1024:
+#     print('fdafadfs')
 
 
 

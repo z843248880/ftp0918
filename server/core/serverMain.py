@@ -158,7 +158,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
 
 def run():
-    HOST, PORT = "localhost", 556
+    HOST, PORT = "localhost", 555
     server = socketserver.ThreadingTCPServer((HOST, PORT), MyTCPHandler)
     server.serve_forever()
 if __name__ == '__main__':
